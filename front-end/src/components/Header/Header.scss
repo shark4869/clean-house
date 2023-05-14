@@ -1,0 +1,34 @@
+.navigation {
+    display: flex;
+    align-items: center;
+    gap: 0 60px;
+    a {
+        text-transform: uppercase;
+        color: #5a5a5a;
+        &:hover {
+                color: #000;
+        }
+    }
+    .active {
+        color: #000;
+        font-weight: 500;
+    }
+}
+.mobile-navigation {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px 0;
+        a {
+            text-transform: uppercase;
+            color: #5a5a5a;
+            
+            &:hover {
+                color: #000;
+            }
+        }
+        .active {
+            color: #000;
+            font-weight: 500;
+        }
+}
