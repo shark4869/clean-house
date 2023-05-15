@@ -195,6 +195,23 @@ def login():
         expires_delta = timedelta(minutes=5)
         access_token = create_access_token(
             identity=user.id, expires_delta=expires_delta)
-        return jsonify({'access_token': access_token}), 200
+        response = {
+            'access_token': access_token,
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'password': user.password,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'address': user.address,
+                'gender': user.gender,
+                'phone': user.phone,
+                'birth_date': user.birth_date,
+                'avatar': user.avatar,
+                'role_id': user.role_id,
+            }
+        }
+        return jsonify(response), 200
     else:
         return jsonify({'error': 'Invalid username or password'}), 401

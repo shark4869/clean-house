@@ -1,5 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import {useSelector, useDispatch  } from 'react-redux';
+import { LoginSuccess } from '../../features/Login/LoginSlice';
+import { handleLogout } from '../../features/Login/LoginAPI';
+import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 import {
   AppBar,
   Box,
@@ -10,7 +15,7 @@ import {
   Avatar,
   Menu,
   MenuItem,
-  Typography,
+  Typography
 } from "@mui/material";
 import MenuIcon from '@mui/icons-material/Menu';
 import { NavLink, Link } from "react-router-dom";
@@ -18,16 +23,54 @@ import logo from '../../assets/images/Logo1.png'
 import './Header.scss'
 import { StyledOutlineButton, StyledFillButton } from '../Button/Button';
 
-const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
 function Header() {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isLogin, user } = useSelector(state => state.login);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [userMenu, setUserMenu] = useState(null);
 
 
+  useEffect(() => {
+    // Kiểm tra xem có token trong localStorage không
+    const token = localStorage.getItem('token');
+    const isLogin = localStorage.getItem('isLogin');
+   
+    if (token && isLogin === 'true') {
+      const decodedToken = jwt_decode(token);
+      const user = localStorage.getItem('user');
+      if (decodedToken.exp < Date.now() / 1000) {
+        // Token đã hết hạn, xử lý tại đây (ví dụ: xóa token, đăng xuất người dùng)
+        dispatch(handleLogout());
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        localStorage.removeItem('isLogin');
+        navigate('/');
+      }
+      else {
+        // Cập nhật trạng thái đăng nhập
+        dispatch(LoginSuccess({ isLogin: true, user: JSON.parse(user), access_token: token }));
+      }
+    }
+  }, [dispatch, navigate]);
+  console.log('ckeck login:',isLogin)
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
-
+  const handleOpenUserMenu = (event)=>{
+    setUserMenu(event.currentTarget)
+  }
+  const handleCloseUserMenu = ()=>{
+    setUserMenu(null)
+  }
+  const Logout = ()=>{
+    dispatch(handleLogout());
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('isLogin');
+    navigate("/");
+  }
   const drawer = (
     <Box onClick={handleDrawerToggle} className="mobile">
       <Box height={"100px"} mb={5}>
@@ -47,14 +90,17 @@ function Header() {
           <NavLink to={"/about-us"}>Về chúng tôi</NavLink>
         </li>
       </ul> 
+      {!isLogin ?
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "30px 0" }} mt={5}>
             <StyledOutlineButton>
                 <NavLink to={"/login"}>Đăng nhập</NavLink>
             </StyledOutlineButton>
             <StyledFillButton>
-                <NavLink to={"/Register"}>Đăng ký</NavLink>
+                <NavLink to={"/register"}>Đăng ký</NavLink>
             </StyledFillButton>
-        </Box>
+      </Box>
+      : null}
+      
     </Box>
   );
   return (
@@ -97,7 +143,7 @@ function Header() {
               {drawer}
         </Drawer>
         {/* mobile */}
-        <Box height={"70px"} sx={{ display: { xs: 'flex', md: 'none' }}}>
+        <Box height={"70px"} sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
             <Link to={"/"}>
                 <img src={logo} alt="logo" height={"100%"} />
             </Link>
@@ -115,25 +161,32 @@ function Header() {
                 </li>
             </ul>
         </Box>
+        {!isLogin ?
         <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' }, alignItems: "center", gap: "0 20px" }}>
             <StyledOutlineButton>
                 <NavLink to={"/login"}>Đăng nhập</NavLink>
             </StyledOutlineButton>
             <StyledFillButton>
-                <NavLink to={"/Register"}>Đăng ký</NavLink>
+                <NavLink to={"/register"}>Đăng ký</NavLink>
             </StyledFillButton>
         </Box>
-            {/* user login */}
-          {/* <Box sx={{ flexGrow: 0 }}>
-            <Tooltip>
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+        :
+        <Box sx={{ flexGrow: 0 }}>
+            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0 10px", color: "#000", cursor: "pointer" }}
+            onClick={handleOpenUserMenu}
+            >
+              <IconButton  sx={{ p: 0 }}>
+                <Avatar alt="User name" src={user.avatar} />
               </IconButton>
-            </Tooltip>
+              <Typography sx={{ display: { xs: "none", sm: "block" }}}>
+                  {user.first_name} {user.last_name}
+              </Typography>
+            </Box>
+            {user.role_id ===1 && 
             <Menu
               sx={{ mt: '45px' }}
               id="menu-appbar"
-              anchorEl={anchorElUser}
+              anchorEl={userMenu}
               anchorOrigin={{
                 vertical: 'top',
                 horizontal: 'right',
@@ -143,16 +196,75 @@ function Header() {
                 vertical: 'top',
                 horizontal: 'right',
               }}
-              open={Boolean(anchorElUser)}
+              open={Boolean(userMenu)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{setting}</Typography>
+                <MenuItem >
+                  <NavLink to="/admin">Quản trị</NavLink>
                 </MenuItem>
-              ))}
-            </Menu>
-          </Box> */}
+                <MenuItem onClick={Logout}>
+                  <Typography>Đăng xuất</Typography>
+                </MenuItem>
+            </Menu>}
+            {user.role_id ===2 && 
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={userMenu}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(userMenu)}
+              onClose={handleCloseUserMenu}
+            >
+                <MenuItem >
+                  <NavLink to="/personal">Trang cá nhân</NavLink>
+                </MenuItem>
+                <MenuItem>
+                  <NavLink to="/user-service">Dịch vụ của tôi</NavLink>
+                </MenuItem>
+                <MenuItem >
+                  <NavLink to="/user-history">Xem lịch sử</NavLink>
+                </MenuItem>
+                <MenuItem  onClick={Logout} >
+                  <Typography >Đăng xuất</Typography>
+                </MenuItem>
+            </Menu>}
+             {user.role_id ===3 && 
+            <Menu
+              sx={{ mt: '45px' }}
+              id="menu-appbar"
+              anchorEl={userMenu}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(userMenu)}
+              onClose={handleCloseUserMenu}
+            >
+                <MenuItem >
+                  <NavLink to="/personal">Trang cá nhân</NavLink>
+                </MenuItem>
+                <MenuItem >
+                  <NavLink to="/user-history">Xem lịch sử</NavLink>
+                </MenuItem>
+                <MenuItem  onClick={Logout} >
+                  <Typography >Đăng xuất</Typography>
+                </MenuItem>
+            </Menu>}
+        </Box>
+        }   
         </Toolbar>
       </Container>
     </AppBar>

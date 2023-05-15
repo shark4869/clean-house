@@ -1,4 +1,5 @@
 from flask import Flask, request, Blueprint
+from flask_cors import CORS
 from .users.controller import users
 from .roles.controller import roles
 from .categories.controller import categories
@@ -21,6 +22,7 @@ def create_db(app):
 
 def create_app(config_file="config.py"):
     app = Flask(__name__)
+    CORS(app, origins='http://localhost:3000')
     app.config.from_pyfile(config_file)
     db.init_app(app)
     ma.init_app(app)
