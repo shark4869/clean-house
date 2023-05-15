@@ -49,7 +49,7 @@ def add_user_service():
 
 def register_service():
     data = request.json
-    if (data and ('username' in data) and ('password' in data) and ('first_name' in data) and ('last_name' in data) and ('email' in data) and ('address' in data) and ('gender' in data) and ('phone' in data) and ('birth_date' in data) and ('avatar' in data) and ('role_id' in data)):
+    if (data and ('username' in data) and ('password' in data) and ('first_name' in data) and ('last_name' in data) and ('email' in data) and ('address' in data) and ('gender' in data) and ('phone' in data) and ('birth_date' in data) and ('role_id' in data)):
         username = data['username']
         password = data['password']
         first_name = data['first_name']
@@ -59,7 +59,7 @@ def register_service():
         gender = data['gender']
         phone = data['phone']
         birth_date = data['birth_date']
-        avatar = data['avatar']
+        avatar = ""
         role_id = data['role_id']
         try:
             user = Users(username, password, first_name, last_name, email,
@@ -67,9 +67,10 @@ def register_service():
             db.session.add(user)
             db.session.commit()
             return jsonify({'message': 'Register Success'}), 200
-        except IndentationError:
+        except Exception as e:
             db.session.rollback()
-            return jsonify({'message': 'Register not Success'}), 403
+            error_message = str(e)
+            return jsonify({'message': 'Register not Success', 'error': error_message}), 403
 
 # GET
 

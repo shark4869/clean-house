@@ -1,0 +1,11 @@
+.register{
+    width: 400px;
+    margin: auto auto;
+    box-shadow: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+    padding: 30px;
+    border-radius: 15px;
+    .register-link {
+        text-decoration: underline;
+        color: #cf881d;
+    }
+}
