@@ -12,7 +12,7 @@ const LoginPage = () => {
     <Container maxWidth="lg">
         <Box sx={{ display: 'flex', height: '100vh' }}>
             <Box sx={{ flexGrow: 0, display: { xs: 'none', md: 'flex' }, flexDirection: 'column'}} height={"100%"}>
-                <Box height={"100px"}>
+                <Box height={"100px"}  width={"200px"}>
                   <Link to={"/"}>
                     <img src={logo} alt="logo" height={"100%"}  />
                   </Link>
