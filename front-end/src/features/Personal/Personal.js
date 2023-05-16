@@ -92,7 +92,7 @@ const Personal = () => {
                     <Box className="user-info">
                         <Avatar alt="avatar" src={user.avatar} className='user-avatar' />
                         <Typography  variant="body1"  sx={{ color:"#cf881d", textAlign: "center" }}>
-                            {role.name}
+                            {role && role.name}
                         </Typography>
                         <label htmlFor="file-input" className="custom-file-input">
                             Đổi ảnh
