@@ -1,0 +1,42 @@
+
+.footer {
+    border-top: 1px solid #eeeeee;
+    .footer-content {
+        padding: 50px 0;
+
+        .logo {
+            height: 200px;
+            padding-bottom: 50px;
+        }
+
+        .footer-heading {
+            font-weight: 600;
+            color: #000;
+        }
+
+        .footer-link {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 15px 0;
+            padding-left: 0;
+
+            li,a {
+                color: #5a5a5a;
+                transition: 0.5;
+
+                &:hover {
+                    color: #cf881d;
+                }
+            }
+        }
+        .footer-contact{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 15px 0;
+            padding-left: 0;
+            color: #5a5a5a;
+        }
+    }
+}
