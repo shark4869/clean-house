@@ -8,7 +8,6 @@ users = Blueprint("users", __name__)
 
 
 @users.route("/api/user/<int:id>", methods=["GET"])
-@jwt_required()
 def get_user_by_id(id):
     return get_user_by_id_service(id)
 
