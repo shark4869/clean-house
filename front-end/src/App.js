@@ -5,6 +5,7 @@ import RegisterPage from "./pages/RegisterPage/Register";
 import ServicePage from "./pages/ServivePage/ServicePage";
 import AboutPage from "./pages/AboutPage/AboutPage";
 import PageNotFound from "./pages/PageNotFound/PageNotFound";
+import PersonalPage from "./pages/PersonalPage/PersonalPage";
 import GoToTop from "./components/GoToTop/GoToTop";
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/personal" element={<PersonalPage />} />
           <Route path="/about-us" element={<AboutPage />} />
           <Route path="/service" element={<ServicePage />} />
           <Route path="*" element={<PageNotFound />} />
