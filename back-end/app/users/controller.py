@@ -40,7 +40,7 @@ def update_user_by_id(id):
     return update_user_by_id_service(id)
 
 
-@users.route("/api/user-avatar/<int:id>", methods=["PUT"])
+@users.route("/api/user/avatar/<int:id>", methods=["PUT"])
 @jwt_required()
 def update_user_avatar_by_id(id):
     return update_user_avatar_by_id_service(id)

@@ -4,6 +4,7 @@ from app.model import Users
 from flask import request, jsonify, Blueprint, current_app
 import json
 import os
+import cloudinary.uploader
 from werkzeug.utils import secure_filename
 from flask_jwt_extended import JWTManager, jwt_required, create_access_token, get_jwt_identity
 from datetime import datetime, timedelta
@@ -114,7 +115,25 @@ def update_user_by_id_service(id):
                 if "birth_date" in data:
                     user.birth_date = data["birth_date"]
             db.session.commit()
-            return jsonify({'message': 'Update user successfully'}), 200
+            birth_date_formatted = user.birth_date.strftime("%Y-%m-%d")
+            response = {
+            'message': "Update user successfully",
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'password': user.password,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'address': user.address,
+                'gender': user.gender,
+                'phone': user.phone,
+                'birth_date': birth_date_formatted,
+                'avatar': user.avatar,
+                'role_id': user.role_id,
+                }
+            }
+            return jsonify(response), 200
         except:
             db.session.rollback()
             return jsonify({'message': 'Cannot update user'}), 403
@@ -125,6 +144,48 @@ def update_user_by_id_service(id):
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+# def update_user_avatar_by_id_service(id):
+#     upload_folder = os.path.join(current_app.root_path, UPLOAD_FOLDER)
+#     user = Users.query.get(id)
+#     if user:
+#         try:
+#             if request.files.get('avatar'):
+#                 avatar = request.files['avatar']
+#                 if avatar and allowed_file(avatar.filename):
+#                     filename = secure_filename(avatar.filename)
+#                     avatar_path = os.path.join(upload_folder, filename)
+#                     avatar.save(avatar_path)
+#                     # Tạo đường dẫn tương đối từ thư mục gốc của ứng dụng
+#                     app_root = current_app.root_path
+#                     relative_path = os.path.relpath(avatar_path, app_root)
+#                     user.avatar = relative_path
+#             db.session.commit()
+#             birth_date_formatted = user.birth_date.strftime("%Y-%m-%d")
+#             response = {
+#             'message': "Update user avatar successfully",
+#             'user': {
+#                 'id': user.id,
+#                 'username': user.username,
+#                 'password': user.password,
+#                 'first_name': user.first_name,
+#                 'last_name': user.last_name,
+#                 'email': user.email,
+#                 'address': user.address,
+#                 'gender': user.gender,
+#                 'phone': user.phone,
+#                 'birth_date': birth_date_formatted,
+#                 'avatar': user.avatar,
+#                 'role_id': user.role_id,
+#                 }
+#             }
+#             return jsonify(response), 200
+#         except Exception as e:
+#             db.session.rollback()
+#             print(f"Error: {str(e)}")
+#             return jsonify({'message': 'Cannot update user avatar'}), 403
+#     else:
+#         return jsonify({'message': 'User not found'}), 404
 
 def update_user_avatar_by_id_service(id):
     upload_folder = os.path.join(current_app.root_path, UPLOAD_FOLDER)
@@ -137,19 +198,37 @@ def update_user_avatar_by_id_service(id):
                     filename = secure_filename(avatar.filename)
                     avatar_path = os.path.join(upload_folder, filename)
                     avatar.save(avatar_path)
-                    # Tạo đường dẫn tương đối từ thư mục gốc của ứng dụng
-                    app_root = current_app.root_path
-                    relative_path = os.path.relpath(avatar_path, app_root)
-                    user.avatar = relative_path
+                    # Tải lên ảnh lên Cloudinary
+                    upload_result = cloudinary.uploader.upload(avatar_path)
+                    # Lấy đường dẫn công khai từ kết quả tải lên
+                    public_url = upload_result['secure_url']
+                    user.avatar = public_url
             db.session.commit()
-            return jsonify({'message': 'Update user avatar successfully'}), 200
+            birth_date_formatted = user.birth_date.strftime("%Y-%m-%d")
+            response = {
+            'message': "Update user avatar successfully",
+            'user': {
+                'id': user.id,
+                'username': user.username,
+                'password': user.password,
+                'first_name': user.first_name,
+                'last_name': user.last_name,
+                'email': user.email,
+                'address': user.address,
+                'gender': user.gender,
+                'phone': user.phone,
+                'birth_date': birth_date_formatted,
+                'avatar': user.avatar,
+                'role_id': user.role_id,
+                }
+            }
+            return jsonify(response), 200
         except Exception as e:
             db.session.rollback()
-            print(f"Error: {str(e)}")
-            return jsonify({'message': 'Cannot update user avatar'}), 403
+            error_message = str(e)
+            return jsonify({'message': 'Cannot update user avatar', 'error': error_message}), 403
     else:
         return jsonify({'message': 'User not found'}), 404
-
 
 def change_password_service(id):
     user = Users.query.get(id)
@@ -196,6 +275,7 @@ def login():
         expires_delta = timedelta(minutes=5)
         access_token = create_access_token(
             identity=user.id, expires_delta=expires_delta)
+        birth_date_formatted = user.birth_date.strftime("%Y-%m-%d")
         response = {
             'access_token': access_token,
             'user': {
@@ -208,7 +288,7 @@ def login():
                 'address': user.address,
                 'gender': user.gender,
                 'phone': user.phone,
-                'birth_date': user.birth_date,
+                'birth_date': birth_date_formatted,
                 'avatar': user.avatar,
                 'role_id': user.role_id,
             }
