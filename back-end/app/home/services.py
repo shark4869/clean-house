@@ -2,6 +2,7 @@ from app.extentions import db
 from app.app_ma import BanerSchema
 from app.model import Baner
 from flask import request, jsonify, Blueprint, current_app
+import cloudinary.uploader
 from werkzeug.utils import secure_filename
 import json
 import os
@@ -28,9 +29,11 @@ def add_baner_service():
                 filename = secure_filename(image.filename)
                 image_path = os.path.join(upload_folder, filename)
                 image.save(image_path)
-                app_root = current_app.root_path
-                relative_path = os.path.relpath(image_path, app_root)
-                banner = Baner(image=relative_path, active=True)
+                # Tải lên ảnh lên Cloudinary
+                upload_result = cloudinary.uploader.upload(image_path)
+                    # Lấy đường dẫn công khai từ kết quả tải lên
+                public_url = upload_result['secure_url']
+                banner = Baner(image=public_url, active=True)
                 db.session.add(banner)
                 db.session.commit()
                 return jsonify({'message': 'Add baner successfully'}), 200

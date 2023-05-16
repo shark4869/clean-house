@@ -2,7 +2,7 @@ import React, { useState,useEffect  } from 'react';
 import {useSelector, useDispatch  } from 'react-redux';
 import { editUser, editAvatar } from './PersonalAPI';
 import { fetchRoles } from '../GetRole/RoleAPI';
-import {Typography, Box, Avatar,Grid, Select, MenuItem,Snackbar, Alert,Button, OutlinedInput,TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Container, InputAdornment } from "@mui/material";
+import {Typography, Box, Avatar,Grid, Button, OutlinedInput, FormControl, RadioGroup, FormControlLabel, Radio, Container, InputAdornment } from "@mui/material";
 import DateRangeIcon from "@mui/icons-material/DateRange";
 import StyleFormControl from '../../components/FormControl/FormControl';
 import './Personal.scss'
@@ -23,14 +23,11 @@ const Personal = () => {
     const [gender, setGender] = useState(user.gender);
     const [phone, setPhone] = useState(user.phone);
     const [role_id, setRole] = useState(user.role_id);
-    const [avatar, setAvatar] = useState(user.avatar);
-    const [username, setUsername] = useState(user.username);
-    const [password, setPassword] = useState(user.password);
+    
   
     const { userUpdate, avatarUpdate } = useSelector(state => state.personal);
     const { roles } = useSelector(state => state.roles);
 
-    useEffect(() => {
     if (userUpdate !== undefined && Object.keys(userUpdate).length > 0) {
         localStorage.setItem('user', JSON.stringify(userUpdate));
     }
@@ -38,14 +35,14 @@ const Personal = () => {
     if (avatarUpdate !== undefined && Object.keys(avatarUpdate).length > 0) {
         localStorage.setItem('user', JSON.stringify(avatarUpdate));
     }
-    }, [userUpdate, avatarUpdate, user,dispatch ]);
+
 
     useEffect(() => {
         dispatch(fetchRoles());
-    }, []);
+    }, [dispatch]);
      
     const role = roles ? roles.find((item) => item.id === role_id) : null
-    console.log('check role:', role)
+
      const handleEditUser = () =>{
         setEdit(true);
         setUser(false)

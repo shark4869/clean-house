@@ -18,7 +18,7 @@ def delete_banner(id):
 
 
 @home.route("/api/banner/<int:id>", methods=["PUT"])
-# @jwt_required()
+@jwt_required()
 def update_banner(id):
     return update_banner_by_id_service(id)
 
