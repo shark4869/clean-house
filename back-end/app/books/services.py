@@ -46,7 +46,24 @@ def add_book_service():
                              start_time, timer, note, total, payment_id, status_update)
             db.session.add(new_book)
             db.session.commit()
-            return jsonify({'message': 'Add book successfully'}), 200
+            response = {
+            'message': "Add book successfully",
+            'book': {
+                'id': new_book.id,
+                'service_id': new_book.service_id,
+                'customer_id': new_book.customer_id,
+                'book_date': new_book.book_date,
+                'status_id': new_book.status_id,
+                'workplace': new_book.workplace,
+                'start_time': new_book.start_time,
+                'timer': new_book.timer,
+                'note': new_book.note,
+                'total': new_book.total,
+                'payment_id': new_book.payment_id,
+                'status_update': new_book.status_update
+                }
+            }
+            return jsonify(response), 200
         except IndentationError:
             db.session.rollback()
             return jsonify({'message': 'Can not add book'}), 403
@@ -114,7 +131,24 @@ def update_book_status_service(id):
                 book.status_id = data["status_id"]
                 book.status_update = data["status_update"]
             db.session.commit()
-            return jsonify({'message': 'Update book status successfully'}), 200
+            response = {
+            'message': "Update book status successfully",
+            'book': {
+                'id': book.id,
+                'service_id': book.service_id,
+                'customer_id': book.customer_id,
+                'book_date': book.book_date,
+                'status_id': book.status_id,
+                'workplace': book.workplace,
+                'start_time': book.start_time,
+                'timer': book.timer,
+                'note': book.note,
+                'total': book.total,
+                'payment_id': book.payment_id,
+                'status_update': book.status_update
+                }
+            }
+            return jsonify(response), 200
         except:
             db.session.rollback()
             return jsonify({'message': 'Can not update book status'}), 403

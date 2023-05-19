@@ -1,0 +1,54 @@
+.service {
+    margin: 0 auto;
+    padding: 50px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    .service-content {
+        margin-bottom: 50px;
+        display: flex;
+        flex-direction: column;
+        gap: 20px 0;
+        
+        .service-heading {
+            color: #cf881d;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .service-part {
+            display: flex;
+           
+            .service-title {
+                width: 170px;
+                flex-shrink: 0;
+                color: #000;
+            }
+            .service-value {
+                flex: 1;
+                color: #5a5a5a;
+            }
+        }
+        .service-button {
+            display: flex;
+            align-items: center;
+            gap: 30px 100px;
+        }
+    }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px 0;
+    .form-heading{
+        color: #cf881d;
+        text-transform: uppercase;
+        font-weight: 600;
+        
+    }
+    .input {
+        display: flex;
+        gap: 0 30px;
+        .input-label {
+             width: 120px;
+        }
+    }
+}

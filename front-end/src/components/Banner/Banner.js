@@ -20,7 +20,7 @@ const Baner = () => {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     backgroundRepeat: 'no-repeat',
-    height: '100vh',
+    height: '600px',
     position: 'relative'
   }}
     >
@@ -38,7 +38,7 @@ const Baner = () => {
       <Container maxWidth="lg" sx={{display: 'flex', alignItems: 'center'}}>
         <Box sx={{margin: '100px auto', display: 'flex' , alignItems: 'center', flexDirection: 'column', gap: '50px 0'}}>
             <Typography  variant="h3"  sx={{ color:"#fff", textAlign: "center", fontWeight: 'medium',display: 'block', 
-            width: {xs: '100%', sm: '500px'}, zIndex: 10 }}>
+            width: {xs: '100%', sm: '500px'}, zIndex: 10, lineHeight: 1.5}}>
                             DỊCH VỤ VỆ SINH NHÀ Ở, THƯƠNG MẠI CHUYÊN NGHIỆP
             </Typography>
             <StyledFillButton sx={{fontSize: '20px'}}>

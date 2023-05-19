@@ -13,7 +13,7 @@ def get_user_by_id(id):
 
 
 @users.route("/api/users", methods=["GET"])
-@jwt_required()
+# @jwt_required()
 def get_all_users():
     return get_all_users_service()
 

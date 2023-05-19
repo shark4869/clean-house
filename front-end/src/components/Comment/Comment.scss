@@ -1,0 +1,79 @@
+.rating {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    border: 1px solid #555555;
+    border-radius: 10px;
+    padding: 20px;
+    .rating-context {
+        color: #5a5a5a;
+        text-align: center;
+        flex-shrink: 0;
+        overflow: hidden;
+    }
+    .rating-info{
+        flex: 1;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        .avatar {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 15px;
+        }
+        .rate-user {
+            color: #000;
+            font-weight: 500;
+        }
+        .rate-role {
+            color: #5a5a5a;
+        }
+           
+    }
+  
+}
+
+  .react-multi-carousel-list {
+      .react-multi-carousel-dot-list {
+            .react-multi-carousel-dot button {
+                    margin-top: 15px;
+                    width: 8px;
+                    height: 8px;
+                    background: #888888;
+                    border-width: 0;
+                }
+            .react-multi-carousel-dot--active button {
+                background: #cf881d;
+            }
+      }
+  }
+ .react-multi-carousel-item {
+     padding: 0 15px;
+ }
+
+ .react-multiple-carousel__arrow {
+     background: transparent;
+     top: 200px;
+
+     &::before {
+         font-size: 30px;
+         color: #cf881d;
+     }
+
+     &:hover {
+         background: transparent;
+     }
+ }
+
+ .react-multiple-carousel__arrow--left {
+     left: -15px;
+ }
+
+ .react-multiple-carousel__arrow--right {
+     right: -15px;
+ }
+
+ 

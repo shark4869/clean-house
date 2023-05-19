@@ -45,7 +45,7 @@ def get_rate_by_services_service(service_id):
     if rates:
         return rates_schema.jsonify(rates)
     else:
-        return jsonify({'message': 'Not found rate'}), 404
+        return jsonify({'message': 'Not found rate'}), 204
 
 
 def get_rate_by_customer_service(customer_id):

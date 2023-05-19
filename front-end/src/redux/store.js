@@ -5,6 +5,11 @@ import { personalSlice } from "../features/Personal/PersonalSlice";
 import { roleSlice } from "../features/GetRole/RoleSlice";
 import { userSlice } from "../features/Users/UsersSlice";
 import { homeSlice } from "../features/HomeContent/HomeSlice";
+import { serviceSlice } from "../features/Services/ServiceSlice";
+import { categorySlice } from "../features/Category/CategorySlice";
+import { bookSlice } from "../features/Books/BookSlice";
+import { rateSlice } from "../features/Rates/RateSlice";
+import { statusSlice } from "../features/Status/StatusSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,7 +18,12 @@ const store = configureStore({
     personal: personalSlice.reducer,
     roles: roleSlice.reducer,
     users: userSlice.reducer,
-    home: homeSlice.reducer
+    home: homeSlice.reducer,
+    services: serviceSlice.reducer,
+    category: categorySlice.reducer,
+    books: bookSlice.reducer,
+    rates: rateSlice.reducer,
+    status: statusSlice.reducer,
   },
 });
 export default store;

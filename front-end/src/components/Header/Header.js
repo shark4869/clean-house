@@ -227,10 +227,10 @@ function Header() {
                   <NavLink to="/personal">Trang cá nhân</NavLink>
                 </MenuItem>
                 <MenuItem>
-                  <NavLink to="/user-service">Dịch vụ của tôi</NavLink>
+                  <NavLink to={`/user-service/${user.id}`}>Dịch vụ của tôi</NavLink>
                 </MenuItem>
                 <MenuItem >
-                  <NavLink to="/user-history">Xem lịch sử</NavLink>
+                  <NavLink to="/history">Xem lịch sử</NavLink>
                 </MenuItem>
                 <MenuItem  onClick={Logout} >
                   <Typography >Đăng xuất</Typography>
@@ -257,7 +257,7 @@ function Header() {
                   <NavLink to="/personal">Trang cá nhân</NavLink>
                 </MenuItem>
                 <MenuItem >
-                  <NavLink to="/user-history">Xem lịch sử</NavLink>
+                  <NavLink to="/history">Xem lịch sử</NavLink>
                 </MenuItem>
                 <MenuItem  onClick={Logout} >
                   <Typography >Đăng xuất</Typography>
