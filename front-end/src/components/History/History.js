@@ -27,18 +27,19 @@ const History = () => {
     const { status } = useSelector(state => state.status);
     const service = services && services.length > 0 && services.filter((i) => i.employee_id === user.id)
    
-    const bookUser = user.role_id ==3 ? 
+    const bookUser = user.role_id === 3 ? 
     (books && books.length > 0 && books.filter((i) => i.customer_id === user.id))
     :
     (books && books.length > 0 && books.filter((i) => service?.some((item) => item.id === i.service_id)))
 
+    // const sortedBookUser = [...bookUser];
     bookUser.sort((a, b) => {
     const dateA = new Date(a.status_update);
     const dateB = new Date(b.status_update);
     return dateB - dateA;
     });
 
-    // console.log(bookUser);
+    console.log(Array.isArray(bookUser));
   return (
     <Box>
          {bookUser && bookUser.length > 0 && bookUser.map((item)=>{

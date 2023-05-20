@@ -6,7 +6,6 @@ import { fetchBooks, UpdateStatus } from '../../features/Books/BookAPI';
 import { fetchStatus } from '../../features/Status/StatusAPI';
 import { fetchAllUser } from '../../features/Users/UserAPI';
 import { fetchAllRate } from '../../features/Rates/RatesAPI';
-import { updateBookStatus } from '../../features/Books/BookSlice';
 import { Link } from "react-router-dom";
 import { useParams } from 'react-router-dom';
 import {
@@ -14,7 +13,7 @@ import {
   Typography,
   Divider,
   Select,
-  MenuItem
+  MenuItem, Button, Dialog, DialogContent,DialogContentText, DialogActions
 } from "@mui/material";
 import { StyledOutlineButton } from '../Button/Button';
 import { StyledFillButton } from '../Button/Button';
@@ -67,7 +66,7 @@ const HistoryDetail = () => {
     
 
   
-   const check_rate = rates.some(i => i.service_id === serviceBook.id && i.customer_id === user.id  );
+   const check_rate = rates.some(i => i.service_id === serviceBook.id && i.customer_id === user.id );
 
 //    cập nhật trạng thái
     const [open, setOpen] = useState(false);
@@ -109,8 +108,51 @@ const HistoryDetail = () => {
   return menuItemIndex < selectedStatus.id - 1;
 };
   const disable = selectedStatus.id === 6 || selectedStatus.id === 7
+  const slicedStatus = status?.slice(0, 6);
+
+  // hủy 
+  const [openToast, setOpenToast] = useState(false);
+  const handleCloseCancle = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpenToast(false);
+    };
+  const handleOpenCancle = () => {
+     setOpenToast(true);
+  }
+  const handleCancleSerrvice = () =>{
+    const status_id = 7
+    const status_update = dateTime
+    const update ={
+        status_id,
+        status_update
+    }
+      dispatch(UpdateStatus(bookId, update));
+      handleCloseCancle();
+  }
   return (
-    <Box mt={"100px"} mb={"100px"}>    
+    <Box mt={"100px"} mb={"100px"}>   
+       <Dialog
+        open={openToast}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Xác nhận hủy dịch vụ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCancleSerrvice}  sx={{color: '#cf881d'}}>
+            Xác nhận
+          </Button>
+           <Button onClick={handleCloseCancle} autoFocus sx={{color: '#cf881d'}}>
+            Hủy
+          </Button>
+        </DialogActions>
+      </Dialog> 
         <Typography variant="h4"  textAlign={"center"} sx={{color: "#cf881d",textTransform: "uppercase"}} mb={5}>
                     Chi tiết đơn đặt dịch vụ
         </Typography>  
@@ -163,7 +205,7 @@ const HistoryDetail = () => {
                         },
                       }}
                   >
-                      {status && status.length > 0 && status.map((i, index) => (
+                      {slicedStatus && slicedStatus.length > 0 && slicedStatus.map((i, index) => (
                           <MenuItem
                           key={i.id}
                           value={i}
@@ -311,6 +353,18 @@ const HistoryDetail = () => {
                 </StyledFillButton>
                 : null
             }  
+            {/* hủy */}
+             {book.status_id === 1 ?
+                  <Button variant="contained" 
+                  onClick={handleOpenCancle}
+                   sx={{ 
+                    backgroundColor: "#cf881d",
+                    height: "50px",
+                    width: "200px",
+                    ":hover": {
+                    backgroundColor: "#cf881d"
+                    }
+                }}> Hủy dịch vụ</Button> : null}
             </Box>                                         
         </Box>     
     </Box>
