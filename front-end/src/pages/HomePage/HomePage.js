@@ -4,7 +4,7 @@ import Baner from '../../components/Banner/Banner';
 import Intro from '../../components/Intro/Intro';
 import Comment from '../../components/Comment/Comment';
 import Category from '../../components/Category/Category';
-
+import Process from '../../components/Process/Process';
 
 const HomePage = () => {
   return (
@@ -12,6 +12,7 @@ const HomePage = () => {
       <Baner/>
       <Category/>
       <Intro/>
+      <Process />
       <Comment/>
     </Layout>
   )

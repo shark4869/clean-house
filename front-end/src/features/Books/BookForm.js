@@ -160,7 +160,7 @@ const handleSubmit = (e) => {
           </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleSucces} autoFocus >
+          <Button onClick={handleSucces} autoFocus sx={{color: '#cf881d'}}>
             Về trang chủ 
           </Button>
         </DialogActions>

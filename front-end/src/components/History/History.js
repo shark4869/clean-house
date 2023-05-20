@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect } from "react";
+import {  useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchServices } from '../../features/Services/ServiceAPI';
 import { fetchBooks } from '../../features/Books/BookAPI';
@@ -32,6 +32,13 @@ const History = () => {
     :
     (books && books.length > 0 && books.filter((i) => service?.some((item) => item.id === i.service_id)))
 
+    bookUser.sort((a, b) => {
+    const dateA = new Date(a.status_update);
+    const dateB = new Date(b.status_update);
+    return dateB - dateA;
+    });
+
+    // console.log(bookUser);
   return (
     <Box>
          {bookUser && bookUser.length > 0 && bookUser.map((item)=>{

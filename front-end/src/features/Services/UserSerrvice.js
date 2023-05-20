@@ -2,7 +2,6 @@ import React, { useState,useEffect  } from 'react';
 import { Editor } from '@tinymce/tinymce-react';
 import {useSelector, useDispatch  } from 'react-redux';
 import { fetchServices, editService, CreateService, removeService } from './ServiceAPI';
-// import { fetchBooks } from '../Books/BookAPI';
 import { getAllSerrvice } from './ServiceSlice';
 import { fetchCategory } from '../Category/CategoryAPI';
 import {Typography, Box, Select, MenuItem, OutlinedInput, Divider  } from "@mui/material";
@@ -42,11 +41,10 @@ const UserService = () => {
     useEffect(() => {
          dispatch(fetchServices());
          dispatch(fetchCategory());
-        //  dispatch(fetchBooks());
     }, [dispatch]);
     const { services } = useSelector(state => state.services);
     const { category } = useSelector(state => state.category);
-    // const { books } = useSelector(state => state.books);
+  
     const userData = localStorage.getItem('user');
     const user = JSON.parse(userData);
     const userService = (services && services.length > 0) && services.filter(service => service.employee_id === user.id && service.is_deleted === false);
