@@ -64,16 +64,13 @@ const Footer = () => {
             </Typography>
             <ul className="footer-link">
               <li>
-                <Link to={"/service"}>Giúp việc nhà theo giờ</Link>
+                <Link to={"/service"}>Dọn dẹp</Link>
               </li>
               <li>
-                <Link to={"/service"}>Tổng vệ sinh</Link>
+                <Link to={"/service"}>Nấu ăn</Link>
               </li>
               <li>
                 <Link to={"/service"}>Đi chợ</Link>
-              </li>
-              <li>
-                <Link to={"/service"}>Nấu ăn gia đình</Link>
               </li>
               <li>
                 <Link to={"/service"}>Giặt ủi</Link>

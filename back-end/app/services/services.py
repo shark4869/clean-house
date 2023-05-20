@@ -22,10 +22,22 @@ def add_service_cleaning():
         price = data['price']
         try:
             new_service = Services(
-                name, category_id, description, employee_id, price)
+                name, category_id, description, employee_id, price, is_deleted=False)
             db.session.add(new_service)
             db.session.commit()
-            return jsonify({'message': 'Add service successfully'}), 200
+            response = {
+            'message': "Add service successfully",
+            'service': {
+                'id': new_service.id,
+                'name': new_service.name,
+                'category_id': new_service.category_id,
+                'description': new_service.description,
+                'employee_id': new_service.employee_id,
+                'price': new_service.price,
+                'is_deleted': new_service.is_deleted
+                }
+            }
+            return jsonify(response), 200
         except IndentationError:
             db.session.rollback()
             return jsonify({'message': 'Can not add service'}), 403
@@ -77,7 +89,19 @@ def update_service_by_id_service(id):
                 if "price" in data:
                     service.price = data["price"]
             db.session.commit()
-            return jsonify({'message': 'Update service successfully'}), 200
+            response = {
+            'message': "Update service successfully",
+            'service': {
+                'id': service.id,
+                'name': service.name,
+                'category_id': service.category_id,
+                'description': service.description,
+                'employee_id': service.employee_id,
+                'price': service.price,
+                'is_deleted': service.is_deleted,
+                }
+            }
+            return jsonify(response), 200
         except:
             db.session.rollback()
             return jsonify({'message': 'Can not update service'}), 403
@@ -92,11 +116,27 @@ def delete_service_by_id_service(id):
     service = Services.query.get(id)
     if service:
         try:
-            db.session.delete(service)
+            # db.session.delete(service)
+            service.is_deleted = True  # Đánh dấu sản phẩm là đã bị xóa
             db.session.commit()
             return jsonify({'message': 'Delete service successfully'}), 200
+        except Exception as e:
+            db.session.rollback()
+            error_message = str(e)
+            return jsonify({'message': 'Can not delete service', 'error': error_message}), 403
+    else:
+        return jsonify({'message': 'Not found service'}), 404
+
+#restore 
+def restore_service_by_id_service(id):
+    service = Services.query.get(id)
+    if service:
+        try:
+            service.is_deleted = False  # Đánh dấu sản phẩm là đã bị xóa
+            db.session.commit()
+            return jsonify({'message': 'Restore service successfully'}), 200
         except IndentationError:
             db.session.rollback()
             return jsonify({'message': 'Can not delete service'}), 400
     else:
-        return jsonify({'message': 'Not found service'}), 404
+        return jsonify({'message': 'Not found restore'}), 404

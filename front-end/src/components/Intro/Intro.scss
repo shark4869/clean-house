@@ -1,10 +1,7 @@
 .intro {
     background-color: rgba(207, 136, 29,0.6);
     .intro-content {
-        display: flex;
-        align-items: center; 
-        gap: 0 50px;
-        height: 150px;
+        padding: 50px 0;
         justify-content: space-between;
         .intro-item {
             display:  flex;

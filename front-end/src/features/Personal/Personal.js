@@ -25,17 +25,12 @@ const Personal = () => {
     const [role_id, setRole] = useState(user.role_id);
     
   
-    const { userUpdate, avatarUpdate } = useSelector(state => state.personal);
+    const { userUpdate } = useSelector(state => state.personal);
     const { roles } = useSelector(state => state.roles);
 
     if (userUpdate !== undefined && Object.keys(userUpdate).length > 0) {
         localStorage.setItem('user', JSON.stringify(userUpdate));
     }
-
-    if (avatarUpdate !== undefined && Object.keys(avatarUpdate).length > 0) {
-        localStorage.setItem('user', JSON.stringify(avatarUpdate));
-    }
-
 
     useEffect(() => {
         dispatch(fetchRoles());
@@ -74,6 +69,7 @@ const Personal = () => {
         dispatch(editUser(user.id, updateUser));
         setEdit(false);
         setUser(true);
+        
     }
     
     
@@ -83,7 +79,7 @@ const Personal = () => {
          <Typography mt={"50px"} mb={"50px"} variant="h3" component="h1" sx={{ color:"#cf881d", textAlign: "center" }}>
                 Thông tin cá nhân
             </Typography>
-        <Box className="user" mb={"50px"}>
+        <Box className="user-profile" mb={"100px"} p={"20px"}>
              <Grid container columnSpacing={2} rowSpacing={4}>
                 <Grid item xs={12} sm={4} md={4}>
                     <Box className="user-info">
@@ -102,50 +98,50 @@ const Personal = () => {
                             {isUser && 
                             <Box className="user-content">
                                 <Box className="user-item"> 
-                                    <Typography variant="body1" component="p" className="user-title">
+                                    <Typography variant="body1"  className="user-title">
                                         Họ và tên: 
                                     </Typography>
-                                    <Typography variant="body1" component="p" className="user-value">
+                                    <Typography variant="body1"  className="user-value">
                                         {user.first_name} {user.last_name}
                                     </Typography>
                                 </Box>
                                 <Box className="user-item"> 
-                                    <Typography variant="body1" component="p" className="user-title">
+                                    <Typography variant="body1"  className="user-title">
                                             Ngày sinh:
                                     </Typography>
-                                    <Typography variant="body1" component="p" className="user-value">
+                                    <Typography variant="body1"  className="user-value">
                                            {user.birth_date} 
                                     </Typography>
                                 </Box>
                                 <Box className="user-item"> 
-                                    <Typography variant="body1" component="p" className="user-title">
+                                    <Typography variant="body1"  className="user-title">
                                             Giới tính:
                                     </Typography>
-                                    <Typography variant="body1" component="p" className="user-value">
+                                    <Typography variant="body1"  className="user-value">
                                             {user.gender} 
                                     </Typography>
                                 </Box>
                                 <Box className="user-item"> 
-                                    <Typography variant="body1" component="p" className="user-title">
+                                    <Typography variant="body1"  className="user-title">
                                             Số điện thoại:
                                     </Typography>
-                                    <Typography variant="body1" component="p" className="user-value">
+                                    <Typography variant="body1"  className="user-value">
                                            {user.phone} 
                                     </Typography>
                                 </Box>
                                 <Box className="user-item"> 
-                                    <Typography variant="body1" component="p" className="user-title">
+                                    <Typography variant="body1"  className="user-title">
                                             Email:
                                     </Typography>
-                                    <Typography variant="body1" component="p" className="user-value">
+                                    <Typography variant="body1"  className="user-value">
                                           {user.email}
                                     </Typography>
                                 </Box>
                                 <Box className="user-item"> 
-                                    <Typography variant="body1" component="p" className="user-title">
+                                    <Typography variant="body1"  className="user-title">
                                            Địa chỉ:
                                     </Typography>
-                                    <Typography variant="body1" component="p" className="user-value">
+                                    <Typography variant="body1"  className="user-value">
                                           {user.address} 
                                     </Typography>
                                 </Box>
@@ -162,8 +158,8 @@ const Personal = () => {
                             }
                             {isEdit && 
                                  <Box component="form" onSubmit={handleSubmit} noValidate autoComplete='off' className="user-edit">
-                                    <Box className="user-input">
-                                        <Typography variant="body1" component="p" className="input-label">
+                                    <Box className="user-input" sx={{flexDirection: {xs: 'column', sm: 'row'}, alignItems: {xs: "flex-start", sm: "center"}}}>
+                                        <Typography variant="body1"  className="input-label">
                                                 Họ: 
                                         </Typography>
                                          <StyleFormControl sx={{minWidth: 270,
@@ -171,13 +167,14 @@ const Personal = () => {
                                                 borderRadius: "5px"
                                             }
                                         }}>
+                                
                                         <OutlinedInput size='small' value={first_name} type='text' autoFocus className="input-value"
                                         onChange={(event) => setfirst_name(event.target.value)}
                                         />
                                          </StyleFormControl>
                                     </Box>
-                                    <Box className="user-input">
-                                        <Typography variant="body1" component="p" className="input-label">
+                                    <Box className="user-input" sx={{flexDirection: {xs: 'column', sm: 'row'}, alignItems: {xs: "flex-start", sm: "center"}}}>
+                                        <Typography variant="body1"  className="input-label">
                                                 Tên: 
                                         </Typography>
                                          <StyleFormControl sx={{
@@ -195,8 +192,8 @@ const Personal = () => {
                                         />
                                          </StyleFormControl>
                                     </Box>
-                                    <Box className="user-input">
-                                        <Typography variant="body1" component="p" className="input-label">
+                                    <Box className="user-input" sx={{flexDirection: {xs: 'column', sm: 'row'}, alignItems: {xs: "flex-start", sm: "center"}}}>
+                                        <Typography variant="body1"  className="input-label">
                                                 Ngày sinh: 
                                         </Typography>
                                          <StyleFormControl sx={{
@@ -221,8 +218,8 @@ const Personal = () => {
                                         />
                                         </StyleFormControl>
                                     </Box>
-                                    <Box className="user-input">
-                                        <Typography variant="body1" component="p" className="input-label">
+                                    <Box className="user-input" sx={{flexDirection: {xs: 'column', sm: 'row'}, alignItems: {xs: "flex-start", sm: "center"}}}>
+                                        <Typography variant="body1"  className="input-label">
                                                 Giới tính: 
                                         </Typography>
                                         <FormControl className="input-value">
@@ -240,8 +237,8 @@ const Personal = () => {
                                         </FormControl>
                                     
                                     </Box>
-                                    <Box className="user-input">
-                                        <Typography variant="body1" component="p" className="input-label">
+                                    <Box className="user-input" sx={{flexDirection: {xs: 'column', sm: 'row'}, alignItems: {xs: "flex-start", sm: "center"}}}>
+                                        <Typography variant="body1"  className="input-label">
                                                 Số điện thoại: 
                                         </Typography>
                                          <StyleFormControl sx={{
@@ -259,8 +256,8 @@ const Personal = () => {
                                         />
                                          </StyleFormControl>
                                     </Box>
-                                    <Box className="user-input">
-                                        <Typography variant="body1" component="p" className="input-label">
+                                    <Box className="user-input" sx={{flexDirection: {xs: 'column', sm: 'row'}, alignItems: {xs: "flex-start", sm: "center"}}}>
+                                        <Typography variant="body1"  className="input-label">
                                                 Email: 
                                         </Typography>
                                          <StyleFormControl sx={{
@@ -278,8 +275,8 @@ const Personal = () => {
                                         />
                                          </StyleFormControl>
                                     </Box>
-                                    <Box className="user-input">
-                                        <Typography variant="body1" component="p" className="input-label">
+                                    <Box className="user-input" sx={{flexDirection: {xs: 'column', sm: 'row'}, alignItems: {xs: "flex-start", sm: "center"}}}>
+                                        <Typography variant="body1"  className="input-label">
                                                 Địa chỉ: 
                                         </Typography>
                                          <StyleFormControl sx={{
@@ -298,7 +295,7 @@ const Personal = () => {
                                          </StyleFormControl>
                                     </Box>
                                 
-                                    <Box className="user-input">
+                                    <Box className="user-input" >
                                     <Button type="submit" size="large" variant="contained" 
                                         sx={{  mt: 3, mb: 2, backgroundColor: "#cf881d",
                                             ":hover": {

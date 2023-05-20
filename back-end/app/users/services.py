@@ -272,7 +272,7 @@ def login():
 
     user = Users.query.filter_by(username=username).first()
     if user and user.password == password:
-        expires_delta = timedelta(minutes=5)
+        expires_delta = timedelta(hours=1)
         access_token = create_access_token(
             identity=user.id, expires_delta=expires_delta)
         birth_date_formatted = user.birth_date.strftime("%Y-%m-%d")

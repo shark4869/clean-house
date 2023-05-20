@@ -56,13 +56,15 @@ class Services(db.Model):
     employee_id = db.Column(
         db.Integer, db.ForeignKey('users.id'), nullable=False)
     price = db.Column(db.Integer, nullable=False)
+    is_deleted = db.Column(db.Boolean, nullable=False, default=False)
 
-    def __init__(self, name, category_id, description, employee_id, price):
+    def __init__(self, name, category_id, description, employee_id, price, is_deleted):
         self.name = name
         self.category_id = category_id
         self.description = description
         self.employee_id = employee_id
         self.price = price
+        self.is_deleted = is_deleted
 
 
 class Books(db.Model):

@@ -5,6 +5,7 @@ from flask import request, jsonify, current_app
 from werkzeug.utils import secure_filename
 import json
 import os
+import cloudinary.uploader
 
 
 category_schema = CategorySchema()
@@ -75,12 +76,13 @@ def update_category_imgae_by_id_service(id):
                 image = request.files['image']
                 if image and allowed_file(image.filename):
                     filename = secure_filename(image.filename)
-                    avatar_path = os.path.join(upload_folder, filename)
-                    image.save(avatar_path)
-                    # Tạo đường dẫn tương đối từ thư mục gốc của ứng dụng
-                    app_root = current_app.root_path
-                    relative_path = os.path.relpath(avatar_path, app_root)
-                    category.avatar = relative_path
+                    image_path = os.path.join(upload_folder, filename)
+                    image.save(image_path)
+                    # Tải lên ảnh lên Cloudinary
+                    upload_result = cloudinary.uploader.upload(image_path)
+                    # Lấy đường dẫn công khai từ kết quả tải lên
+                    public_url = upload_result['secure_url']
+                    category.image = public_url
             db.session.commit()
             return jsonify({'message': 'Update category image successfully'}), 200
         except Exception as e:
