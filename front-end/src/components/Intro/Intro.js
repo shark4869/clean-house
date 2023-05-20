@@ -7,9 +7,9 @@ import './Intro.scss'
 
 const Intro = () => {
   return (
-    <Box className="intro" mt={"50px"} mb={"50px"}>
+    <Box className="intro" mt={"100px"} mb={"50px"}>
       <Container maxWidth="lg">
-        <Box className='intro-content' sx={{display: 'flex' , alignItems: 'center', gap: '0 50px',height: '150px'}}>
+        <Box className='intro-content' sx={{display: 'flex' , flexDirection: {xs: 'column', sm: 'row'}, gap: {xs: '50px 0', sm: '0 50px'}, alignItems: {xs: 'flex-start', sm: 'center'}, margin: {xs: '0 20%', sm: '0'}}}>
             <Box className='intro-item'>
                 <Box>
                     <Diversity1Icon sx={{fontSize: '60px'}}/>

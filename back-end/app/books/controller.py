@@ -22,7 +22,7 @@ def add_book():
 
 
 @books.route("/api/books", methods=["GET"])
-@jwt_required()
+# @jwt_required()
 def get_all_books():
     return get_all_book_service()
 
