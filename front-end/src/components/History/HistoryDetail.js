@@ -7,6 +7,7 @@ import { fetchStatus } from '../../features/Status/StatusAPI';
 import { fetchAllUser } from '../../features/Users/UserAPI';
 import { fetchAllRate } from '../../features/Rates/RatesAPI';
 import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import {
   Box,
@@ -21,6 +22,7 @@ const HistoryDetail = () => {
     const { id } = useParams();
     const bookId =parseInt(id)
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const userData = localStorage.getItem('user');
     const user = JSON.parse(userData);
 
@@ -130,6 +132,7 @@ const HistoryDetail = () => {
     }
       dispatch(UpdateStatus(bookId, update));
       handleCloseCancle();
+       navigate('/history');
   }
   return (
     <Box mt={"100px"} mb={"100px"}>   
