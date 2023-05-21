@@ -116,10 +116,13 @@ const Services = () => {
          
             {showResults ? (
         <>
-       
+            <Typography variant="body1"  sx={{color: "#5a5a5a"}} mb={1}>
+                        Kết quả tìm kiếm:
+            </Typography>
           {searchResults.length > 0 ? (
             <>
-             <Grid container rowSpacing={6} columnSpacing={{ xs: 1, sm: 2, md: 3 }} mb={"100px"}>
+            
+             <Grid container rowSpacing={6} columnSpacing={{ xs: 1, sm: 2, md: 3 }} mb={"50px"}>
             {searchResults.map((item)=>{
               const service = services && services.length > 0 && services.find((i) => i.employee_id === item.id)
               const ratesSerrvice = rates && rates.length > 0 && rates.filter((rate) => rate.service_id === service.id)
