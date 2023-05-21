@@ -1,9 +1,10 @@
 import { getAllSerrvice, updateSerrvice, addService, deleteService } from "./ServiceSlice";
 import axios from "axios";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 export const fetchServices = () => async dispatch => {
   try {
-    const response = await axios.get('http://127.0.0.1:5000/api/services');
+    const response = await axios.get(`${backendUrl}/api/services`);
     dispatch(getAllSerrvice(response.data));
   } catch (error) {
     throw error;
@@ -17,7 +18,7 @@ export const editService = (id, service) => async dispatch => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.put(`http://127.0.0.1:5000/api/service/${id}`, service, config);
+    const response = await axios.put(`${backendUrl}/api/service/${id}`, service, config);
     console.log('response:', response.data);
     dispatch(updateSerrvice(response.data));
   } catch (error) {
@@ -33,7 +34,7 @@ export const removeService = (id) => async dispatch => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.delete(`http://127.0.0.1:5000//api/service/${id}`, {}, config);
+    const response = await axios.delete(`${backendUrl}/api/service/${id}`, {}, config);
     console.log('response:', response.data.message);
     dispatch(deleteService(id));
   } catch (error) {
@@ -49,7 +50,7 @@ export const CreateService = (service) => async dispatch => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.post(`http://127.0.0.1:5000/api/service`, service, config);
+    const response = await axios.post(`${backendUrl}/api/service`, service, config);
     console.log('response:', response.data.message);
     dispatch(addService(response.data.service));
   } catch (error) {

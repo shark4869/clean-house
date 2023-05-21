@@ -1,9 +1,10 @@
 import { getUser, getAllUser } from "./UsersSlice";
 import axios from "axios";
 
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 export const fetchUser = (id) => async dispatch => {
   try {
-    const response = await axios.get(`http://127.0.0.1:5000/api/user/${id}`);
+    const response = await axios.get(`${backendUrl}/api/user/${id}`);
     dispatch(getUser(response.data));
   } catch (error) {
     throw error;
@@ -11,7 +12,7 @@ export const fetchUser = (id) => async dispatch => {
 };
 export const fetchAllUser = () => async dispatch => {
   try {
-    const response = await axios.get(`http://127.0.0.1:5000/api/users`);
+    const response = await axios.get(`${backendUrl}/api/users`);
     dispatch(getAllUser(response.data));
   } catch (error) {
     throw error;

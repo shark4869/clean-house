@@ -54,27 +54,24 @@ const Services = () => {
         setLocation(event.target.value);
     };
     const handleSearch = () => {
-        const filteredUsers = users.filter((user) => {
-        const userServices = services.filter((service) => service.employee_id === user.id);
-        const matchingServices = userServices.filter((service) => {
+        const filteredServices = services.filter((service) => {
+        const user = users.find((user) => user.id === service.employee_id);
         const isCategoryMatch = service.category_id === type;
-        return isCategoryMatch;
-      });
+        const isAddressMatch = user.address.toLowerCase().includes(location.toLowerCase());
 
-      return (
-        matchingServices.length > 0 &&
-        user.address.toLowerCase().indexOf(location.toLowerCase()) !== -1 // Sử dụng indexOf để tìm kiếm theo phần nội dung
-      );
-    });
+        return isCategoryMatch && isAddressMatch;
+        });
+            setSearchResults(filteredServices);
+            setShowResults(true);
+            console.log('search:', filteredServices)
+            setLocation('')
+            setType('')
+    
+        };
 
-    setSearchResults(filteredUsers);
-    setShowResults(true);
-    console.log('search:', filteredUsers)
-    setLocation('')
-    setType('')
-  };
   const handleHideResults = () => {
-    setShowResults(false); // Tắt trạng thái hiển thị kết quả
+    setShowResults(false); 
+    setSearchResults([]);// Tắt trạng thái hiển thị kết quả
   };
   return (
       <Container maxWidth="lg" >
@@ -124,8 +121,8 @@ const Services = () => {
             
              <Grid container rowSpacing={6} columnSpacing={{ xs: 1, sm: 2, md: 3 }} mb={"50px"}>
             {searchResults.map((item)=>{
-              const service = services && services.length > 0 && services.find((i) => i.employee_id === item.id)
-              const ratesSerrvice = rates && rates.length > 0 && rates.filter((rate) => rate.service_id === service.id)
+              const user = users && users.length > 0 && users.find((i) => i.id === item.employee_id)
+              const ratesSerrvice = rates && rates.length > 0 && rates.filter((rate) => rate.service_id === item.id)
               const averageRating = calculateAverageRating(ratesSerrvice);
               const numRatings = ratesSerrvice.length;
              
@@ -134,15 +131,15 @@ const Services = () => {
               <Grid item xs={12} sm={6} md={4} className="" key={item.id}>
                   <Box component="div" className="service-item">
                       <Box className="service-img" >
-                          <img src={item.avatar} alt={item.name} />
+                          <img src={user.avatar} alt="avatar" />
                       </Box>
                       <Box className="service-content"  > 
                       <Box className="service-top" p={2} >
                               <Typography variant="body1"  className="service-employee" textAlign={"center"}>
-                                    {item.first_name} {item.last_name}
+                                    {user.first_name} {user.last_name}
                               </Typography>
                                <Typography variant="h5"  className="service-name" textAlign={"center"} mt={2}>
-                                    {service.name}
+                                    {item.name}
                               </Typography>
                       </Box>
                       <Box sx={{display: 'flex', alignItems: 'center'}} mb={1}>

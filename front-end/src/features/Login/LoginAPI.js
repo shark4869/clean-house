@@ -1,8 +1,10 @@
 import { loginLoading, LoginSuccess, LoginFailed, Logout } from "./LoginSlice";
 import axios from "axios";
+
+const backendUrl = process.env.REACT_APP_BACKEND_URL;
 const loginApi = async (username, password) => {
   try {
-    const response = await axios.post("http://127.0.0.1:5000/api/login", {
+    const response = await axios.post(`${backendUrl}/api/login`, {
       username,
       password,
     });
@@ -32,7 +34,7 @@ export const handleLogout = () => async (dispatch) => {
         Authorization: `Bearer ${token}`,
       },
     };
-    const response = await axios.post('http://127.0.0.1:5000/api/logout', {}, config);
+    const response = await axios.post(`${backendUrl}/api/logout`, {}, config);
     console.log(response.data.message);
   } catch (e) {
     console.error("error: ", e.message);
