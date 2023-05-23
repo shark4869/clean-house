@@ -9,7 +9,6 @@ from .books.controller import books
 from .rates.controller import rates
 from .home.controler import home
 from .process.controller import process
-from .router.controller import router
 from .extentions import db, ma, jwt, migrate
 from .model import Users, Roles, Categories, Services, Books, Rates, Status, Payment, Baner
 import os
@@ -30,7 +29,6 @@ def create_app(config_file="config.py"):
     jwt.init_app(app)
     migrate.init_app(app, db)
     create_db(app)
-    app.register_blueprint(router)
     app.register_blueprint(roles)
     app.register_blueprint(users)
     app.register_blueprint(categories)
