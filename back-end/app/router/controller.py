@@ -5,13 +5,12 @@ import os
 @router.route('/<path:path>')
 def serve(path):
     if path != "" and not path.startswith("api") and not path.startswith("static"):
-        return send_from_directory('static', 'index.html')
+        root_dir = os.path.dirname(os.path.abspath(__file__))
+        return send_from_directory(os.path.join(root_dir, 'static'), 'index.html')
     else:
         return send_from_directory('./', path)
 
-@router.errorhandler(404)
-def not_found(e):
-    return send_from_directory('static', 'index.html')
+
 
 # @router.route('/<path:filename>')
 # def serve_static():
