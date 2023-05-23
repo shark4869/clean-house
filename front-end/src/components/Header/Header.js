@@ -75,7 +75,7 @@ function Header() {
     <Box onClick={handleDrawerToggle} className="mobile">
       <Box height={"100px"} mb={5}>
         <Link to={"/"} >
-          <img src={logo} alt="logo" height={"100%"} style={{margin: "0 auto"}} />
+          <img src={logo} alt="logo" height={"100%"}  style={{margin: "0 auto"}} />
         </Link>
       </Box>
  
@@ -145,7 +145,7 @@ function Header() {
         {/* mobile */}
         <Box height={"70px"} sx={{flexGrow: 1, display: { xs: 'flex', md: 'none' }}}>
             <Link to={"/"}>
-                <img src={logo} alt="logo" height={"100%"} />
+                <img src={logo} alt="logo" height={"100%"} width={"100%"} style={{margin: "0 auto"}} />
             </Link>
         </Box>
         <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>

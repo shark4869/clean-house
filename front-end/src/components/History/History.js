@@ -42,7 +42,10 @@ const History = () => {
     }
 
   return (
-    <Box>
+    <Box mb={"100px"}>
+         <Typography variant="h4" className="heading" mt={"50px"} textAlign={"center"}>
+                        Lịch sử giao dịch
+        </Typography>
          {bookUser && bookUser.length > 0 && bookUser.map((item)=>{
                 const serviceBook = services && services.length > 0 && services.find((i) => i.id === item.service_id)
                 const statusBook = status && status.length > 0 && status.find((i) => i.id === item.status_id)
@@ -55,7 +58,8 @@ const History = () => {
                 const seconds = String(dateObject.getSeconds()).padStart(2, '0');
                 const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;;
                 return (
-                    <Box mt={"100px"} mb={"100px"} >
+                    <Box mt={"50px"} mb={"50px"} >
+
                         <Box sx={{width: {xs: "100%", sm: "70%"}, margin: "0 auto", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px", padding: "50px"}}  > 
                             <Box sx={{display: 'flex', flexDirection: {xs: 'column', sm: 'row'}, alignItems: 'center', justifyContent:'flex-end', gap: '20px 20px'}}>
                                  <Typography variant="body1"  textAlign={"center"} sx={{color: "#5a5a5a"}}>
@@ -97,7 +101,7 @@ const History = () => {
         
                 )
             })}
-    </Box>
+    </Box >
   )
 }
 

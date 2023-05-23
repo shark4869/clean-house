@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Typography, Container } from "@mui/material";
+import { Box, Typography, Container, Avatar } from "@mui/material";
 import img2 from '../../assets/images/1.png';
 import img1 from '../../assets/images/2.png';
 import img4 from '../../assets/images/3.png';
@@ -18,32 +18,36 @@ const Process = () => {
                 <Box>
                    <img src={img1} alt="" />
                 </Box>
-                <Box>
-                    <Typography className='process-info' sx={{textAlign: 'center', color: "#cf881d", fontWeight: 500, marginTop: '16px'}}>Chọn dịch vụ</Typography>
+                <Box sx={{display: 'flex' , gap: '0 10px', alignItems: 'center', marginTop: '16px'}}>
+                    <Avatar sx={{ bgcolor: "#cf881d" }}>1</Avatar>
+                    <Typography className='process-info' sx={{textAlign: 'center', color: "#cf881d", fontWeight: 500 }}>Chọn dịch vụ</Typography>
                 </Box>
             </Box>
             <Box className='process-item'>
                 <Box>
                    <img src={img2} alt="" />
                 </Box>
-                <Box>
-                    <Typography className='process-info' sx={{textAlign: 'center', color: "#cf881d", fontWeight: 500, marginTop: '16px'}}>Nhập thời gian và địa điểm</Typography>
+                <Box sx={{display: 'flex' , gap: '0 10px', alignItems: 'center', marginTop: '16px'}}>
+                    <Avatar sx={{ bgcolor: "#cf881d" }}>2</Avatar>
+                    <Typography className='process-info' sx={{textAlign: 'center', color: "#cf881d", fontWeight: 500}}>Nhập thời gian và địa điểm</Typography>
                 </Box>
             </Box>
              <Box className='process-item'>
                 <Box>
                    <img src={img3} alt="" />
                 </Box>
-                <Box>
-                    <Typography className='process-info' sx={{textAlign: 'center', color: "#cf881d", fontWeight: 500, marginTop: '16px'}}>Tiến hành công việc</Typography>
+                <Box sx={{display: 'flex' , gap: '0 10px', alignItems: 'center', marginTop: '16px'}}>
+                    <Avatar sx={{ bgcolor: "#cf881d" }}>3</Avatar>
+                    <Typography className='process-info' sx={{textAlign: 'center', color: "#cf881d", fontWeight: 500}}>Tiến hành công việc</Typography>
                 </Box>
             </Box>
              <Box className='process-item'>
                 <Box>
                    <img src={img4} alt="" />
                 </Box>
-                <Box>
-                    <Typography className='process-info' sx={{textAlign: 'center', color: "#cf881d", fontWeight: 500, marginTop: '16px'}}>Đánh giá và xếp hạng</Typography>
+                <Box sx={{display: 'flex' , gap: '0 10px', alignItems: 'center', marginTop: '16px'}}>
+                    <Avatar sx={{ bgcolor: "#cf881d" }}>4</Avatar>
+                    <Typography className='process-info' sx={{textAlign: 'center', color: "#cf881d", fontWeight: 500}}>Đánh giá và xếp hạng</Typography>
                 </Box>
             </Box>
      

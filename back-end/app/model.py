@@ -68,7 +68,7 @@ class Services(db.Model):
 
 
 class Books(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     service_id = db.Column(db.Integer, db.ForeignKey(
         'services.id'), nullable=False)
     customer_id = db.Column(

@@ -157,7 +157,7 @@ const HistoryDetail = () => {
         </DialogActions>
       </Dialog> 
         <Typography variant="h4"  textAlign={"center"} sx={{color: "#cf881d",textTransform: "uppercase"}} mb={5}>
-                    Chi tiết đơn đặt dịch vụ
+                    Chi tiết giao dịch
         </Typography>  
           
         <Box sx={{width: {xs: "100%", sm: "70%"}, margin: "0 auto", boxShadow: "rgba(0, 0, 0, 0.24) 0px 3px 8px", padding: "50px"}}  > 

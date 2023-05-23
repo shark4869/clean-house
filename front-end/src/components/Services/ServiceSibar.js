@@ -17,7 +17,7 @@ const ServiceSidebar = () => {
     <Box sx={{ display: { xs: "none", md: "block" } }}>
     <ul className="service-menu">
         <li className="service-link">
-                <NavLink  to={"/service/category"} true >Tất cả</NavLink>
+                <NavLink  to={"/service/category"} end >Tất cả</NavLink>
         </li>
         {category && category.length > 0 &&category.map((item) => (
              <li key={item.id} className="service-link">

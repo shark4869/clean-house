@@ -217,7 +217,7 @@ const ServiceDetail = () => {
          
             const customer = users ? users.find((i) => i.id === item.customer_id) : {};   
             return (
-                <Box className="comment" key={item.id}>
+                <Box className="comment" key={item.id} mb={5}>
                     <Box sx={{display: 'flex', alignItems: 'center', gap: '0 15px'}}>
                     <Avatar alt="avatar" src={customer?.avatar} className='' />
                     <Typography variant="body1"  className="">

@@ -4,7 +4,7 @@ import {useSelector, useDispatch  } from 'react-redux';
 import { fetchServices, editService, CreateService, removeService } from './ServiceAPI';
 import { getAllSerrvice } from './ServiceSlice';
 import { fetchCategory } from '../Category/CategoryAPI';
-import {Typography, Box, Select, MenuItem, OutlinedInput, Divider  } from "@mui/material";
+import {Typography, Box, Select, MenuItem, OutlinedInput, Divider, Dialog, DialogContent,DialogContentText, DialogActions, Button  } from "@mui/material";
 import { StyledFillButton, StyledOutlineButton } from '../../components/Button/Button';
 import StyleFormControl from '../../components/FormControl/FormControl';
 import styled from 'styled-components';
@@ -83,12 +83,44 @@ const UserService = () => {
         dispatch(CreateService(post));
         setIsAdd(false)
     };
+    // hủy 
+    const [openToast, setOpenToast] = useState(false);
+    const handleCloseCancle = (event, reason) => {
+      if (reason === 'clickaway') {
+        return;
+      }
+      setOpenToast(false);
+    };
+    const handleOpenCancle = () => {
+        setOpenToast(true);
+    }
      const handleDelete = (serviceId) => {
         dispatch(removeService(serviceId));
+        handleCloseCancle();
     };
 
   return (
     <Box mt={"50px"} mb={"100px"}>
+         <Dialog
+        open={openToast}
+        onClose={handleCloseCancle}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Xác nhận xóa dịch vụ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleDelete}  sx={{color: '#cf881d'}}>
+            Xác nhận
+          </Button>
+           <Button onClick={handleCloseCancle} autoFocus sx={{color: '#cf881d'}}>
+            Hủy
+          </Button>
+        </DialogActions>
+      </Dialog> 
        <Typography mb={"50px"} variant="h4" component="h1" sx={{ color:"#cf881d", textAlign: "center" }}>
                Danh sách dịch vụ cung cấp
         </Typography>
@@ -106,7 +138,7 @@ const UserService = () => {
             services={userService}
             onEdit={handleEditClick}
             category={category}
-            onMove={handleDelete}
+            onMove={handleOpenCancle}
             />
         )
         :
@@ -273,6 +305,8 @@ const EditForm = ({ service, onSubmit, onCancel, category }) => {
       event.preventDefault();
     }
     };
+
+    
   return (
     
     <Box component="form" onSubmit={handleSubmit} noValidate autoComplete='off' className="form">
