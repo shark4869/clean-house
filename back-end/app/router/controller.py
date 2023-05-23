@@ -10,3 +10,8 @@ def serve(path):
     else:
         # Gửi các yêu cầu khác đến Flask để xử lý
         return send_from_directory('./', path)
+
+@router.errorhandler(404)
+def not_found(e):
+    return router.send_static_file('../front-end/build', 'index.html')
+
